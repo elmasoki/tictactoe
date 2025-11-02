@@ -1,0 +1,5 @@
+{
+  "name": "Tic Tac Toe",
+  "description": "A classic Tic Tac Toe game where two players can compete against each other. The app features a clean, modern interface and responsive design for a great gaming experience.",
+  "requestFramePermissions": []
+}

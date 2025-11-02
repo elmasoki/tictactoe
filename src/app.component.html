@@ -1,0 +1,54 @@
+<main class="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-4 font-sans">
+  <header class="text-center mb-8">
+    <h1 class="text-5xl font-bold tracking-tight text-cyan-400">Tic Tac Toe</h1>
+    <p class="text-gray-400 mt-2">A classic game built with Angular</p>
+  </header>
+
+  <div class="w-full max-w-xs sm:max-w-sm md:max-w-md">
+    <div class="grid grid-cols-3 gap-3">
+      @for (cell of board(); track $index) {
+        <button 
+          (click)="makeMove($index)"
+          class="aspect-square w-full rounded-lg flex items-center justify-center text-5xl font-bold transition-all duration-200 ease-in-out focus:outline-none focus:ring-4 focus:ring-cyan-500/50"
+          [class.bg-gray-800]="!cell"
+          [class.hover:bg-gray-700]="!cell && !isGameOver()"
+          [class.cursor-not-allowed]="!!cell || isGameOver()"
+          [class.bg-gray-700]="!!cell"
+          [attr.aria-label]="'Cell ' + ($index + 1) + ', value ' + (cell || 'empty')"
+        >
+          @if (cell === 'X') {
+            <span class="text-rose-500">X</span>
+          } @else if (cell === 'O') {
+            <span class="text-yellow-400">O</span>
+          }
+        </button>
+      }
+    </div>
+  </div>
+
+  <footer class="mt-8 text-center h-24">
+    @if (!isGameOver()) {
+      <div class="p-4 rounded-lg bg-gray-800 shadow-lg">
+        <p class="text-2xl font-semibold">
+          Player <span [class.text-rose-500]="currentPlayer() === 'X'" [class.text-yellow-400]="currentPlayer() === 'O'">{{ currentPlayer() }}</span>'s Turn
+        </p>
+      </div>
+    } @else {
+      <div class="p-4 rounded-lg bg-gray-800 shadow-lg animate-fade-in">
+        @if (winner() === 'Tie') {
+          <p class="text-2xl font-semibold text-gray-300">It's a Tie!</p>
+        } @else {
+          <p class="text-2xl font-semibold">
+            Player <span [class.text-rose-500]="winner() === 'X'" [class.text-yellow-400]="winner() === 'O'">{{ winner() }}</span> Wins!
+          </p>
+        }
+        <button 
+          (click)="resetGame()"
+          class="mt-4 px-6 py-2 bg-cyan-600 hover:bg-cyan-500 rounded-md font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-cyan-500"
+        >
+          Play Again
+        </button>
+      </div>
+    }
+  </footer>
+</main>
